@@ -12,6 +12,7 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <h2>Sistema de Gestión de Usuarios</h2>
+        <a href="ListUsers">Listado de Usuarios</a>
     </body>
 </html>

@@ -4,9 +4,41 @@
         <servlet-name>ProductServlet</servlet-name>
         <servlet-class>Servlets.ProductServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AddUser</servlet-name>
+        <servlet-class>Servlets.AddUser</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeleteUser</servlet-name>
+        <servlet-class>Servlets.DeleteUser</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ListUsers</servlet-name>
+        <servlet-class>Servlets.ListUsers</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateUser</servlet-name>
+        <servlet-class>Servlets.UpdateUser</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ProductServlet</servlet-name>
         <url-pattern>/ProductServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddUser</servlet-name>
+        <url-pattern>/AddUser</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteUser</servlet-name>
+        <url-pattern>/DeleteUser</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ListUsers</servlet-name>
+        <url-pattern>/ListUsers</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateUser</servlet-name>
+        <url-pattern>/UpdateUser</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
