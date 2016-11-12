@@ -5,7 +5,7 @@
 --%>
 
 <%-- 
-<%@page contentType="text/html" pageEncoding="UTF-8"%> WTF?¿?¿?¿ Preguntar en clase (acentos)
+<%@page contentType="text/html" pageEncoding="UTF-8"%> WTF? Preguntar en clase (acentos)
 --%>
 <!DOCTYPE html>
 <html>
@@ -25,6 +25,7 @@
             <b>Segundo Apellido</b>
             <input type="text" name="secondLastname" value="${u.secondLastname}" style="display: block;" />
             <input type="submit" name="save" value="Guardar">
+            <input onclick="location.href='ListUsers'" type="button" name="cancel" value="Cancelar">
         </form>
     </body>
 </html>

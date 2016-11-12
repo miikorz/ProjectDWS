@@ -5,18 +5,25 @@
  */
 package Servlets;
 
+import entity.User;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.ArrayList;
+import javax.ejb.EJB;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import service.UserServiceLocal;
 
 /**
  *
  * @author fabio
  */
 public class AddUser extends HttpServlet {
+
+    @EJB
+    private UserServiceLocal userService;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -29,19 +36,25 @@ public class AddUser extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet addUser</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet addUser at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+        String user = request.getParameter("user");
+        String password = request.getParameter("password");
+        String name = request.getParameter("name");
+        String firstLastname = request.getParameter("firstLastname");
+        String secondLastname = request.getParameter("secondLastname");
+        int age = Integer.parseInt(request.getParameter("age"));
+        String addres = request.getParameter("addres");
+        String email = request.getParameter("email");
+        int phone = Integer.parseInt(request.getParameter("phone"));
+
+        User u = new User(3, user, password, name, firstLastname, secondLastname, age, addres, email, phone);
+
+        userService.addUser(u);
+
+        ArrayList _list = userService.listUsers();
+
+        request.getSession().setAttribute("users", _list);
+        RequestDispatcher rd = request.getRequestDispatcher("/listUsers.jsp");
+        rd.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

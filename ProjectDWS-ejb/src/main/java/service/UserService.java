@@ -31,13 +31,21 @@ public class UserService implements UserServiceLocal {
 
     @Override
     public void addUser(User user) {
+        boolean found = false;
+        
         for (int i = 0; list.size() > i; i++) {
-            if (list.get(i).getId() == user.getId()) {
-                user.setId(lastId);
-                lastId++;
-                list.add(user);
-                break;
-            }
+           if(!(list.get(i).getUser().equals(user.getUser()))) {
+               found = false;
+           } else {
+               found = true;
+               break;
+           }
+        }
+        
+        if(found == false){
+            user.setId(lastId);
+            lastId++;
+            list.add(user);
         }
     }
 

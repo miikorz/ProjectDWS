@@ -9,7 +9,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Inicio</title>
     </head>
     <body>
         <h2>Sistema de Gestión de Usuarios</h2>

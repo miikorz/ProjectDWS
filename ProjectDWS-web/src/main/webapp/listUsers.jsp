@@ -15,7 +15,7 @@
     </head>
     <body>
         <h1>Listado de Usuarios</h1>
-        <a href="#">Agregar Usuario</a>
+        <a href="addUser.jsp">Agregar Usuario</a>
         <br>
         <br>
         <table border="1px" cellspacing="0" cellpadding="10px">
@@ -29,23 +29,23 @@
             </tr>
             <%
                 ArrayList<User> list = (ArrayList) session.getAttribute("users");
-                
-                for(User u: list){
-                    int id = u.getId();
-                    String user = u.getUser();
-                    String name = u.getName();
-                    String firstLastname = u.getFirstLastname();
-                    String secondLastname = u.getSecondLastname();
-                %>
+
+                for (int i = 0; list.size() > i; i++) {
+                    int id = list.get(i).getId();
+                    String user = list.get(i).getUser();
+                    String name = list.get(i).getName();
+                    String firstLastname = list.get(i).getFirstLastname();
+                    String secondLastname = list.get(i).getSecondLastname();
+            %>
             <tr>
                 <td><%=user%></td>
                 <td><%=name%></td>
                 <td><%=firstLastname%></td>
                 <td><%=secondLastname%></td>
                 <td><a href="UpdateUser?action=edit&id=<%=id%>">Modificar</td>
-                <td><a href="#">Eliminar</a></td>
+                <td><a href="DeleteUser?id=<%=id%>">Eliminar</a></td>
             </tr>
-            <% } %>
+            <% }%>
         </table>
         <br>
         <a href="index.jsp">Regresar al Inicio</a>
