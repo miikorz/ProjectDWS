@@ -82,9 +82,4 @@ public class UserService implements UserServiceLocal {
 
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
-
-    @Override
-    public String hola(String parameter) {
-        return null;
-    }
 }

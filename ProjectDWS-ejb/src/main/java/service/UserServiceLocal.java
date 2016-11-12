@@ -25,6 +25,4 @@ public interface UserServiceLocal {
     void deleteUser(User user);
 
     User findUserById(User user);
-
-    String hola(String parameter);
 }
