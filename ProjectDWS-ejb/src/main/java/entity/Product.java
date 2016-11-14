@@ -15,13 +15,12 @@ public class Product implements Serializable {
     private double price;
     private ArrayList<String> extras;
 
-    public Product(int productID, int stock, String name, String description, double price, ArrayList<String> extras) {
+    public Product(int productID, int stock, String name, String description, double price) {
         this.productID = productID;
         this.stock = stock;
         this.name = name;
         this.description = description;
         this.price = price;
-        this.extras = extras;
     }
 
     public int getProductID() {
