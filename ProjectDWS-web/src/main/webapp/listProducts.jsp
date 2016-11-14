@@ -17,6 +17,8 @@
         
 	<h1>Listado de Productos</h1>
         
+        <a href="addProduct.jsp">Agregar Producto</a>
+        
 	<br/>
 	<br/>
 

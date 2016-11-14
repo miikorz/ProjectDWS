@@ -5,8 +5,11 @@
  */
 package Servlets;
 
+import entity.Product;
 import java.io.IOException;
 import java.io.PrintWriter;
+import static java.lang.Double.parseDouble;
+import static java.lang.Integer.parseInt;
 import java.util.ArrayList;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
@@ -26,16 +29,36 @@ public class ProductServlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-
-            ArrayList productList = productService.listProducts();
-            request.getSession().setAttribute("productList", productList);
-            RequestDispatcher rd = request.getRequestDispatcher("/listProducts.jsp");
-            rd.forward(request, response);
-
-        } catch (Exception e) {
-            e.printStackTrace();
+        String functionType = request.getParameter("function");
+        switch (functionType) {
+            case "list":
+                try {
+                    ArrayList productList = productService.listProducts();
+                    request.getSession().setAttribute("productList", productList);
+                    RequestDispatcher rd = request.getRequestDispatcher("/listProducts.jsp");
+                    rd.forward(request, response);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                break;
+            case "add":
+                int id = parseInt(request.getParameter("id"));
+                String name = request.getParameter("name");
+                String desc = request.getParameter("desc");
+                int stock = parseInt(request.getParameter("stock"));
+                double price = parseDouble(request.getParameter("price"));
+                
+                Product product = new Product();
+                product.setProductID(id);
+                product.setName(name);
+                product.setDescription(desc);
+                product.setStock(stock);
+                product.setPrice(price);
+                
+                productService.addProduct(product);
+                break;
         }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -8,6 +8,6 @@
     <body>
         <h2>Sistema de Gestión</h2>
         <a href="ListUsers">Listado de Usuarios</a>
-        <a href="ProductServlet">Listado de productos</a>
+        <a href="ProductServlet?function=list">Listado de productos</a>
     </body>
 </html>

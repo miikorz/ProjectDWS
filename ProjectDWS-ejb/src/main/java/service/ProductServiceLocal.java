@@ -5,6 +5,7 @@
  */
 package service;
 
+import entity.Product;
 import java.util.ArrayList;
 import javax.ejb.Local;
 
@@ -14,5 +15,8 @@ import javax.ejb.Local;
  */
 @Local
 public interface ProductServiceLocal {
+    
     ArrayList listProducts();
+    
+    void addProduct(Product product);
 }

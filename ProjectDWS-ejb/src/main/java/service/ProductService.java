@@ -29,4 +29,16 @@ public class ProductService implements ProductServiceLocal {
     public ArrayList listProducts() {
         return productList;
     }
+    
+    @Override
+    public void addProduct(Product product){
+        for (int i = 0; i < productList.size(); i++) {
+            if (productList.get(i).getName().equals(product.getName())) {
+                break;
+            } else {
+                productList.add(product);
+            }
+        }
+    }
+    
 }
