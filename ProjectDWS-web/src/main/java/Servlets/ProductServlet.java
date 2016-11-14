@@ -63,9 +63,7 @@ public class ProductServlet extends HttpServlet {
 
                 productService.addProduct(product);
                 
-                ArrayList productList = productService.listProducts();
-                
-                productList.add(product);
+                ArrayList productList = productService.listProducts();               
                 
                 request.getSession().setAttribute("productList", productList);
                     RequestDispatcher rd = request.getRequestDispatcher("/listProducts.jsp");

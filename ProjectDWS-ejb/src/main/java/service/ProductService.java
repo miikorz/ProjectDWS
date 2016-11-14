@@ -37,6 +37,7 @@ public class ProductService implements ProductServiceLocal {
                 break;
             } else {
                 productList.add(product);
+                
             }
         }
     }
