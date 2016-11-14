@@ -11,20 +11,25 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.css" media="screen" />
         <title>Listado Usuarios</title>
     </head>
     <body>
         <h1>Listado de Usuarios</h1>
+        <br>
         <a href="addUser.jsp">Agregar Usuario</a>
         <br>
         <br>
-        <table border="1px" cellspacing="0" cellpadding="10px">
-            <tr>
+        <table class="table table-bordered table-striped table-hover">
+            <tr class="thead-inverse">
                 <th>Usuario</th>
                 <th>Nombre</th>
                 <th>Primer Apellido</th>
                 <th>Segundo Apellido</th>
-                <th></th>
+                <th>Edad</th>
+                <th>Dirección</th>
+                <th>Correo electrónico</th>
+                <th>Teléfono</th>
                 <th></th>
             </tr>
             <%
@@ -36,13 +41,20 @@
                     String name = list.get(i).getName();
                     String firstLastname = list.get(i).getFirstLastname();
                     String secondLastname = list.get(i).getSecondLastname();
+                    int age = list.get(i).getAge();
+                    String addres = list.get(i).getAddres();
+                    String email = list.get(i).getEmail();
+                    int phone = list.get(i).getPhone();
             %>
             <tr>
-                <td><%=user%></td>
+                <td><a href="UpdateUser?action=edit&id=<%=id%>"><%=user%></td>
                 <td><%=name%></td>
                 <td><%=firstLastname%></td>
                 <td><%=secondLastname%></td>
-                <td><a href="UpdateUser?action=edit&id=<%=id%>">Modificar</td>
+                <td><%=age%></td>
+                <td><%=addres%></td>
+                <td><%=email%></td>
+                <td><%=phone%></td>
                 <td><a href="DeleteUser?id=<%=id%>">Eliminar</a></td>
             </tr>
             <% }%>

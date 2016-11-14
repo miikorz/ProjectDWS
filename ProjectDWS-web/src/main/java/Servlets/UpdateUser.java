@@ -37,8 +37,7 @@ public class UpdateUser extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String action = request.getParameter("action");
-        String userId = request.getParameter("id");
-        int id = Integer.parseInt(userId);
+        int id = Integer.parseInt(request.getParameter("id"));
         User u = new User();
 
         switch (action) {
@@ -55,12 +54,20 @@ public class UpdateUser extends HttpServlet {
                 String name = request.getParameter("name");
                 String firstLastname = request.getParameter("firstLastname");
                 String secondLastname = request.getParameter("secondLastname");
+                int age = Integer.parseInt(request.getParameter("age"));
+                String addres = request.getParameter("addres");
+                String email = request.getParameter("email");
+                int phone = Integer.parseInt(request.getParameter("phone"));
 
                 u.setId(id);
                 u.setUser(user);
                 u.setName(name);
                 u.setFirstLastname(firstLastname);
                 u.setSecondLastname(secondLastname);
+                u.setAge(age);
+                u.setAddres(addres);
+                u.setEmail(email);
+                u.setPhone(phone);
 
                 this.userService.updateUser(u);
 

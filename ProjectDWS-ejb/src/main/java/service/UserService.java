@@ -20,8 +20,8 @@ public class UserService implements UserServiceLocal {
     private static int lastId = 6;
 
     static {
-        list.add(new User(1,"fabio950","admin","Fabio","Pérez","Golderos",1,"a","a",1));
-        list.add(new User(2,"miikorz","admin","Miguel","Burdeos","Tébar",1,"a","a",1));
+        list.add(new User(1,"fabio950","admin","Fabio","Pérez","Golderos",24,"La Cañada, Paterna","fperez950@gmail.com",628786053));
+        list.add(new User(2,"miikorz","admin","Miguel","Burdeos","Tébar",25,"Mislata","miikorz@gmail.com",678543405));
     }
     
     @Override
