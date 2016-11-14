@@ -26,10 +26,16 @@ public class ProductServlet extends HttpServlet {
 
     @EJB
     private service.ProductServiceLocal productService;
+    
+    public void sendAndGoToList(){
+    
+    }
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
         String functionType = request.getParameter("function");
+ 
         switch (functionType) {
             case "list":
                 try {
@@ -47,19 +53,30 @@ public class ProductServlet extends HttpServlet {
                 String desc = request.getParameter("desc");
                 int stock = parseInt(request.getParameter("stock"));
                 double price = parseDouble(request.getParameter("price"));
-                
+
                 Product product = new Product();
                 product.setProductID(id);
                 product.setName(name);
                 product.setDescription(desc);
                 product.setStock(stock);
                 product.setPrice(price);
-                
+
                 productService.addProduct(product);
+                
+                ArrayList productList = productService.listProducts();
+                
+                productList.add(product);
+                
+                request.getSession().setAttribute("productList", productList);
+                    RequestDispatcher rd = request.getRequestDispatcher("/listProducts.jsp");
+                    rd.forward(request, response);
+                
                 break;
         }
 
     }
+
+
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

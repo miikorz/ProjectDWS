@@ -9,11 +9,11 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Add Product</title>
     </head>
     <body>
 
-	<h1>Agregar Producto</h1>
+	<h1>Add Product</h1>
 	
 	<form action="ProductServlet?function=add" method="post">
 		<input type="hidden" name="accion" value="agregar"/>
