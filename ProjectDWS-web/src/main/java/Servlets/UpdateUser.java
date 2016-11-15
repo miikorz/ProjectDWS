@@ -51,6 +51,7 @@ public class UpdateUser extends HttpServlet {
 
             case "update":
                 String user = request.getParameter("user");
+                String password = request.getParameter("password");
                 String name = request.getParameter("name");
                 String firstLastname = request.getParameter("firstLastname");
                 String secondLastname = request.getParameter("secondLastname");
@@ -61,6 +62,7 @@ public class UpdateUser extends HttpServlet {
 
                 u.setId(id);
                 u.setUser(user);
+                u.setPassword(password);
                 u.setName(name);
                 u.setFirstLastname(firstLastname);
                 u.setSecondLastname(secondLastname);
