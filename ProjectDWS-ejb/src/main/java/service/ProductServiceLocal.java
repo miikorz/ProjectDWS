@@ -23,4 +23,6 @@ public interface ProductServiceLocal {
     public Product findProductById(Product productToUpdate);
 
     public void updateProduct(Product productToUpdate);
+
+    public void deleteProduct(Product productToDelete);
 }

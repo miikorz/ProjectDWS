@@ -38,6 +38,7 @@ public class ProductServlet extends HttpServlet {
         Product productToUpdate = new Product();
         ArrayList productList;
         RequestDispatcher rd;
+        int productID;
 
         switch (functionType) {
             case "list":
@@ -74,8 +75,8 @@ public class ProductServlet extends HttpServlet {
 
                 break;
             case "update":
-                int productId = Integer.parseInt(request.getParameter("id"));
-                productToUpdate.setProductID(productId);
+                productID = Integer.parseInt(request.getParameter("id"));
+                productToUpdate.setProductID(productID);
                 productToUpdate = productService.findProductById(productToUpdate);
 
                 request.setAttribute("productToUpdate", productToUpdate);
@@ -83,7 +84,7 @@ public class ProductServlet extends HttpServlet {
 
                 break;
             case "edit":
-                int productID = parseInt(request.getParameter("id"));
+                productID = parseInt(request.getParameter("id"));
                 String productName = request.getParameter("name");
                 String productDesc = request.getParameter("description");
                 int productStock = parseInt(request.getParameter("stock"));
@@ -102,6 +103,19 @@ public class ProductServlet extends HttpServlet {
                 rd = request.getRequestDispatcher("/listProducts.jsp");
                 rd.forward(request, response);
 
+                break;
+            case "delete":
+                productID = parseInt(request.getParameter("id"));
+                Product productToDelete = new Product();
+                productToDelete.setProductID(productID);
+
+                productService.deleteProduct(productToDelete);
+                productList = productService.listProducts();
+
+                request.getSession().setAttribute("productList", productList);
+                rd = request.getRequestDispatcher("/listProducts.jsp");
+                rd.forward(request, response);                
+                
                 break;
         }
 

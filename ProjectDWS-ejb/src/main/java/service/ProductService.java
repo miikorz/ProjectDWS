@@ -64,4 +64,14 @@ public class ProductService implements ProductServiceLocal {
         }
     }
 
+    @Override
+    public void deleteProduct(Product productToDelete) {
+        for (int i = 0; i < productList.size(); i++) {
+            if (productList.get(i).getProductID() == productToDelete.getProductID()) {
+                productList.remove(i);
+                break;
+            }
+        }
+    }
+
 }
