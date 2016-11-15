@@ -19,4 +19,8 @@ public interface ProductServiceLocal {
     ArrayList listProducts();
     
     void addProduct(Product product);
+
+    public Product findProductById(Product productToUpdate);
+
+    public void updateProduct(Product productToUpdate);
 }

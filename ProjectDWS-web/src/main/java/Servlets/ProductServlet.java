@@ -26,22 +26,25 @@ public class ProductServlet extends HttpServlet {
 
     @EJB
     private service.ProductServiceLocal productService;
-    
-    public void sendAndGoToList(){
-    
+
+    public void sendAndGoToList() {
+
     }
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         String functionType = request.getParameter("function");
- 
+        Product productToUpdate = new Product();
+        ArrayList productList;
+        RequestDispatcher rd;
+
         switch (functionType) {
             case "list":
                 try {
-                    ArrayList productList = productService.listProducts();
+                    productList = productService.listProducts();
                     request.getSession().setAttribute("productList", productList);
-                    RequestDispatcher rd = request.getRequestDispatcher("/listProducts.jsp");
+                    rd = request.getRequestDispatcher("/listProducts.jsp");
                     rd.forward(request, response);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -62,19 +65,47 @@ public class ProductServlet extends HttpServlet {
                 product.setPrice(price);
 
                 productService.addProduct(product);
-                
-                ArrayList productList = productService.listProducts();               
-                
+
+                productList = productService.listProducts();
+
                 request.getSession().setAttribute("productList", productList);
-                    RequestDispatcher rd = request.getRequestDispatcher("/listProducts.jsp");
-                    rd.forward(request, response);
-                
+                rd = request.getRequestDispatcher("/listProducts.jsp");
+                rd.forward(request, response);
+
+                break;
+            case "update":
+                int productId = Integer.parseInt(request.getParameter("id"));
+                productToUpdate.setProductID(productId);
+                productToUpdate = productService.findProductById(productToUpdate);
+
+                request.setAttribute("productToUpdate", productToUpdate);
+                request.getRequestDispatcher("/updateProduct.jsp").forward(request, response);
+
+                break;
+            case "edit":
+                int productID = parseInt(request.getParameter("id"));
+                String productName = request.getParameter("name");
+                String productDesc = request.getParameter("description");
+                int productStock = parseInt(request.getParameter("stock"));
+                double productPrice = parseDouble(request.getParameter("price"));
+
+                productToUpdate.setProductID(productID);
+                productToUpdate.setName(productName);
+                productToUpdate.setDescription(productDesc);
+                productToUpdate.setStock(productStock);
+                productToUpdate.setPrice(productPrice);
+
+                productService.updateProduct(productToUpdate);
+                productList = productService.listProducts();
+
+                request.getSession().setAttribute("productList", productList);
+                rd = request.getRequestDispatcher("/listProducts.jsp");
+                rd.forward(request, response);
+
                 break;
         }
 
     }
-
-
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

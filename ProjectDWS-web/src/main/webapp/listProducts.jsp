@@ -15,7 +15,7 @@
     </head>
     <body>
         
-	<h1>Listado de Productos</h1>
+	<h1>Product's List</h1>
         
         <a href="addProduct.jsp">Agregar Producto</a>
         
@@ -47,10 +47,12 @@
                     <td><%=desc%></td>
                     <td><%=stock%></td>
                     <td><%=price%></td>
+                    <td><a href="ProductServlet?function=update&id=<%=id%>">Edit</td>
+                    <td><a href="EliminarPersona?id=<%=id%>">Delete</a></td>
                 </tr>
                 <% } %>
 	</table>
 	<br>
-	<a href="index.jsp">Regresar al Inicio</a>
+	<a href="index.jsp">Go back</a>
     </body>
 </html>
