@@ -6,6 +6,7 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  *
@@ -22,6 +23,7 @@ public class User implements Serializable {
     private String addres;
     private String email;
     private int phone;
+    private final ArrayList<Product> products = new ArrayList<>();
 
     public User(int id, String user, String password, String name, String firstLastname, String secondLastname, int age, String addres, String email, int phone) {
         this.id = id;
@@ -117,5 +119,9 @@ public class User implements Serializable {
 
     public void setPhone(int phone) {
         this.phone = phone;
+    }
+    
+    public ArrayList<Product> getProducts() {
+        return products;
     }
 }

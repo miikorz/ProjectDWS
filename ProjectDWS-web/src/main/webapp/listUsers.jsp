@@ -32,6 +32,7 @@
                 <th>Correo electrónico</th>
                 <th>Teléfono</th>
                 <th></th>
+                <th></th>
             </tr>
             <%
                 ArrayList<User> list = (ArrayList) session.getAttribute("users");
@@ -56,6 +57,7 @@
                 <td><%=addres%></td>
                 <td><%=email%></td>
                 <td><%=phone%></td>
+                <td><a href="AddProductsToUser?id=<%=id%>">Añadir Producto</a></td>
                 <td><a href="DeleteUser?id=<%=id%>" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Eliminar</a></td>
             </tr>
             <% }%>

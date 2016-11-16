@@ -20,6 +20,10 @@
         <servlet-name>UpdateUser</servlet-name>
         <servlet-class>Servlets.UpdateUser</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AddProductsToUser</servlet-name>
+        <servlet-class>Servlets.AddProductsToUser</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ProductServlet</servlet-name>
         <url-pattern>/ProductServlet</url-pattern>
@@ -39,6 +43,10 @@
     <servlet-mapping>
         <servlet-name>UpdateUser</servlet-name>
         <url-pattern>/UpdateUser</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddProductsToUser</servlet-name>
+        <url-pattern>/AddProductsToUser</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
