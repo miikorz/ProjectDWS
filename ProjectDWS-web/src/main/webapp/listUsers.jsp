@@ -12,6 +12,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" type="text/css" href="css/bootstrap.css" media="screen" />
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" media="screen" />
         <title>Listado Usuarios</title>
     </head>
     <body>
@@ -55,7 +56,7 @@
                 <td><%=addres%></td>
                 <td><%=email%></td>
                 <td><%=phone%></td>
-                <td><a href="DeleteUser?id=<%=id%>">Eliminar</a></td>
+                <td><a href="DeleteUser?id=<%=id%>" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Eliminar</a></td>
             </tr>
             <% }%>
         </table>
