@@ -10,7 +10,6 @@ import entity.User;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.ejb.EJB;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -48,9 +47,12 @@ public class AddProductsToUser extends HttpServlet {
         
         ArrayList productList = productService.listProducts();
         
+        //De momento los añadimos directamente, más adelante los añadiremos a partir de un listado de Productos
+        //con sus respectivos checkbox
         u.getProducts().add((Product) productList.get(0));
+        u.getProducts().add((Product) productList.get(1));
         
-        request.setAttribute("u", u);
+        request.getSession().setAttribute("u", u);
         request.getRequestDispatcher("/addProductsToUser.jsp").forward(request, response);
     }
 
