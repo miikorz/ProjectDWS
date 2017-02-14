@@ -7,7 +7,12 @@ package service;
 
 import entity.Product;
 import java.util.ArrayList;
+import java.util.List;
+import javax.annotation.Resource;
+import javax.ejb.EJB;
+import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
+import repository.ProductDaoLocal;
 
 /**
  *
@@ -15,6 +20,12 @@ import javax.ejb.Stateless;
  */
 @Stateless
 public class ProductService implements ProductServiceLocal {
+
+    @EJB
+    private ProductDaoLocal productDao;
+    
+    @Resource
+    private SessionContext contexto;
 
     private static ArrayList<Product> productList = new ArrayList<>();
     private boolean productExist;
@@ -27,8 +38,14 @@ public class ProductService implements ProductServiceLocal {
     }
 
     @Override
-    public ArrayList listProducts() {
-        return productList;
+    public List<Product> listProducts() {
+        try {
+            return productDao.listProducts();
+        } catch (Exception e) {
+            contexto.setRollbackOnly();
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override

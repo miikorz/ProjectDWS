@@ -3,10 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package service;
+package repository;
 
 import entity.Product;
-import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -15,15 +14,6 @@ import javax.ejb.Local;
  * @author alumno
  */
 @Local
-public interface ProductServiceLocal {
-    
+public interface ProductDaoLocal {
     List<Product> listProducts();
-    
-    void addProduct(Product product);
-
-    public Product findProductById(Product productToUpdate);
-
-    public void updateProduct(Product productToUpdate);
-
-    public void deleteProduct(Product productToDelete);
 }

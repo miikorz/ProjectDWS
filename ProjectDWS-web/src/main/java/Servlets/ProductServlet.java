@@ -11,6 +11,7 @@ import java.io.PrintWriter;
 import static java.lang.Double.parseDouble;
 import static java.lang.Integer.parseInt;
 import java.util.ArrayList;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -36,7 +37,8 @@ public class ProductServlet extends HttpServlet {
 
         String functionType = request.getParameter("function");
         Product productToUpdate = new Product();
-        ArrayList productList;
+        List productList;
+        ArrayList<Product> productListArray;
         RequestDispatcher rd;
         int productID;
 
@@ -44,7 +46,8 @@ public class ProductServlet extends HttpServlet {
             case "list":
                 try {
                     productList = productService.listProducts();
-                    request.getSession().setAttribute("productList", productList);
+                    productListArray = new ArrayList<> (productList);
+                    request.getSession().setAttribute("productList", productListArray);
                     rd = request.getRequestDispatcher("/listProducts.jsp");
                     rd.forward(request, response);
                 } catch (Exception e) {
