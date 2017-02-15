@@ -51,8 +51,8 @@
                 <td><%=desc%></td>
                 <td><%=stock%></td>
                 <td><%=price%></td>
-                <td><a class="btn btn-info btn-xs" href="ProductServlet?function=update&id=<%=id%>">Edit</td>
-                <td><a class="btn btn-danger btn-xs" href="ProductServlet?function=delete&id=<%=id%>">Delete</a></td>
+                <td><a class="btn btn-info btn-xs" href="FillUpdateForm?id=<%=id%>">Edit</td>
+                <td><a class="btn btn-danger btn-xs" href="DeleteProduct?id=<%=id%>">Delete</a></td>
             </tr>
             <% }%>
         </table>

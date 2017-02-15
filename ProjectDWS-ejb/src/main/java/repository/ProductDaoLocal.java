@@ -15,5 +15,14 @@ import javax.ejb.Local;
  */
 @Local
 public interface ProductDaoLocal {
+
     List<Product> listProducts();
+
+    void addProduct(Product product);
+
+    void deleteProduct(Product product);
+
+    Product findProductById(Product product);
+
+    public Product updateProduct(Product product);
 }

@@ -15,7 +15,7 @@
 
 	<h1>Add Product</h1>
 	
-	<form action="ProductServlet?function=add" method="post">
+	<form action="AddProduct" method="post">
 		<input type="hidden" name="accion" value="agregar"/>
                 
                 <label for="nombre">ID:</label>

@@ -15,7 +15,7 @@
 
     <h1>Edit Product</h1>
 
-    <form action="ProductServlet?function=edit&id=${productToUpdate.productID}" method="post">
+    <form action="UpdateProduct" method="post">
         <label for="name">ID:</label>
         <input type="text" name="id" value="${productToUpdate.productID}" style="display: block;" readonly/>
 

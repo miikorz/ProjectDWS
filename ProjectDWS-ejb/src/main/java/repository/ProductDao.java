@@ -17,7 +17,7 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class ProductDao implements ProductDaoLocal {
-   
+
     @PersistenceContext(unitName = "projectdwsPU")
     EntityManager em;
 
@@ -25,5 +25,27 @@ public class ProductDao implements ProductDaoLocal {
     public List<Product> listProducts() {
         List<Product> lista = em.createNamedQuery("product.findAll").getResultList();
         return lista;
+    }
+
+    @Override
+    public void addProduct(Product product) {
+        em.persist(product);
+    }
+
+    @Override
+    public void deleteProduct(Product product) {
+        product = findProductById(product);
+        em.remove(product);
+    }
+
+    @Override
+    public Product findProductById(Product product) {
+
+        return em.find(Product.class, product.getProductID());
+    }
+
+    @Override
+    public Product updateProduct(Product product) {
+        return em.merge(product);
     }
 }
