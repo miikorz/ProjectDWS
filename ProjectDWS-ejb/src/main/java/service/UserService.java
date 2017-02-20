@@ -7,7 +7,12 @@ package service;
 
 import entity.User;
 import java.util.ArrayList;
+import java.util.List;
+import javax.annotation.Resource;
+import javax.ejb.EJB;
+import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
+import repository.UserDaoLocal;
 
 /**
  *
@@ -16,70 +21,62 @@ import javax.ejb.Stateless;
 @Stateless
 public class UserService implements UserServiceLocal {
 
-    private static ArrayList<User> list = new ArrayList<>();
-    private static int lastId = 6;
+    @EJB
+    private UserDaoLocal userDao;
 
-    static {
-        list.add(new User(1,"fabio950","admin","Fabio","Pérez","Golderos",24,"La Cañada, Paterna","fperez950@gmail.com",628786053));
-        list.add(new User(2,"miikorz","admin","Miguel","Burdeos","Tébar",25,"Mislata","miikorz@gmail.com",678543405));
-    }
+    @Resource
+    private SessionContext contexto; 
     
     @Override
-    public ArrayList listUsers() {
-        return list;
-    }
-
-    @Override
-    public void addUser(User user) {
-        boolean found = false;
-        
-        for (int i = 0; list.size() > i; i++) {
-           if(!(list.get(i).getUser().equals(user.getUser()))) {
-               found = false;
-           } else {
-               found = true;
-               break;
-           }
-        }
-        
-        if(found == false){
-            user.setId(lastId);
-            lastId++;
-            list.add(user);
-        }
-    }
-
-    @Override
-    public void updateUser(User user) {
-        for (int i = 0; list.size() > i; i++) {
-            if (list.get(i).getId() == user.getId()) {
-                list.set(i, user);
-                break;
-            }
-        }
-    }
-
-    @Override
-    public void deleteUser(User user) {
-        for (int i = 0; list.size() > i; i++) {
-            if (list.get(i).getId() == user.getId()) {
-                list.remove(i);
-                break;
-            }
+    public List<User> listUsers() {
+        try {
+            return userDao.listUsers();
+        } catch (Exception e) {
+            contexto.setRollbackOnly();
+            e.printStackTrace();
+            return null;
         }
     }
 
     @Override
     public User findUserById(User user) {
-        for (int i = 0; list.size() > i; i++) {
-            if (list.get(i).getId() == user.getId()) {
-                return list.get(i);
-            }
+        try {
+            return userDao.findUserById(user);
+        } catch (Exception e) {
+            contexto.setRollbackOnly();
+            e.printStackTrace();
+            return null;
         }
-
-        return null;
     }
 
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
+    @Override
+    public void addUser(User user) {
+        try {
+            userDao.addUser(user);
+        } catch (Exception e) {
+            contexto.setRollbackOnly();
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void deleteUser(User user) {
+        try {
+            userDao.deleteUser(user);
+        } catch (Exception e) {
+            contexto.setRollbackOnly();
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public User updateUser(User user) {
+        try {
+            return userDao.updateUser(user);
+        } catch (Exception e) {
+            contexto.setRollbackOnly();
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

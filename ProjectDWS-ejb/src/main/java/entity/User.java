@@ -7,26 +7,59 @@ package entity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import javax.persistence.*;
 
 /**
  *
  * @author alumno
  */
+@Entity
+@Table(name = "user")
+@NamedQueries({
+    @NamedQuery(name = "user.findAll", query = "SELECT u FROM User u ORDER BY u.id")
+})
 public class User implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_user")
     private int id;
+
+    @Column(nullable = false, length = 50)
     private String user;
+
+    @Column(nullable = false, length = 50)
     private String password;
+
+    @Column(nullable = false, length = 50)
     private String name;
+
+    @Column(nullable = false, length = 50)
     private String firstLastname;
+
+    @Column(nullable = false, length = 50)
     private String secondLastname;
+
+    @Column(nullable = false)
     private int age;
+
+    @Column(nullable = false, length = 50)
     private String addres;
+
+    @Column(nullable = false, length = 50)
     private String email;
+
+    @Column(nullable = false)
     private int phone;
+    
     private final ArrayList<Product> products = new ArrayList<>();
 
-    public User(int id, String user, String password, String name, String firstLastname, String secondLastname, int age, String addres, String email, int phone) {
-        this.id = id;
+    public User() {
+    }
+
+    public User(String user, String password, String name, String firstLastname, String secondLastname, int age, String addres, String email, int phone) {
         this.user = user;
         this.password = password;
         this.name = name;
@@ -38,9 +71,6 @@ public class User implements Serializable {
         this.phone = phone;
     }
 
-    public User() {
-    }
-    
     public int getId() {
         return id;
     }
@@ -120,7 +150,7 @@ public class User implements Serializable {
     public void setPhone(int phone) {
         this.phone = phone;
     }
-    
+
     public ArrayList<Product> getProducts() {
         return products;
     }
