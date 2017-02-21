@@ -7,6 +7,9 @@ package entity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import javax.persistence.*;
 
 /**
@@ -16,7 +19,8 @@ import javax.persistence.*;
 @Entity
 @Table(name = "user")
 @NamedQueries({
-    @NamedQuery(name = "user.findAll", query = "SELECT u FROM User u ORDER BY u.id")
+    @NamedQuery(name = "user.findAll", query = "SELECT u FROM User u ORDER BY u.id"),
+    @NamedQuery(name="user.orderByName", query = "SELECT u FROM User u ORDER BY u.name")
 })
 public class User implements Serializable {
 
@@ -54,9 +58,12 @@ public class User implements Serializable {
     @Column(nullable = false)
     private int phone;
     
-    private final ArrayList<Product> products = new ArrayList<>();
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OrderColumn(name="idx")
+    private List<Product> products; 
 
     public User() {
+        this.products = new ArrayList<>();
     }
 
     public User(String user, String password, String name, String firstLastname, String secondLastname, int age, String addres, String email, int phone) {
@@ -69,6 +76,7 @@ public class User implements Serializable {
         this.addres = addres;
         this.email = email;
         this.phone = phone;
+        this.products = new ArrayList<>();
     }
 
     public int getId() {
@@ -151,7 +159,13 @@ public class User implements Serializable {
         this.phone = phone;
     }
 
-    public ArrayList<Product> getProducts() {
+    public List<Product> getProducts() {
         return products;
     }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
+    }
+
+    
 }

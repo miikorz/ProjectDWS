@@ -5,6 +5,7 @@
  */
 package Servlets;
 
+import entity.Product;
 import entity.User;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import service.ProductServiceLocal;
 import service.UserServiceLocal;
 
 /**
@@ -27,8 +29,13 @@ import service.UserServiceLocal;
         urlPatterns = {"/ListUsers",
             "/AddUser",
             "/DeleteUser",
-            "/UpdateUser"})
+            "/UpdateUser",
+            "/ListProductsByUser",
+            "/OrderByName"})
 public class ControllerUser extends HttpServlet {
+
+    @EJB
+    private ProductServiceLocal productService;
 
     @EJB
     private UserServiceLocal userService;
@@ -54,7 +61,11 @@ public class ControllerUser extends HttpServlet {
             deleteUser(request, response);
         } else if (userPath.equals("/UpdateUser")) {
             updateUser(request, response);
-        } 
+        } else if (userPath.equals("/ListProductsByUser")) {
+            listProductsByUser(request, response);
+        } else if (userPath.equals("/OrderByName")) {
+            orderByName(request, response);
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -100,7 +111,7 @@ public class ControllerUser extends HttpServlet {
         try {
             List list = userService.listUsers();
             ArrayList<User> listUsers = new ArrayList<>(list);
-            
+
             request.getSession().setAttribute("users", listUsers);
             RequestDispatcher rd = request.getRequestDispatcher("/listUsers.jsp");
 
@@ -121,32 +132,30 @@ public class ControllerUser extends HttpServlet {
             String addres = request.getParameter("addres");
             String email = request.getParameter("email");
             int phone = Integer.parseInt(request.getParameter("phone"));
-        
+
             User u = new User(user, password, name, firstLastname, secondLastname, age, addres, email, phone);
-            
+
             userService.addUser(u);
-            
+
             listUsers(request, response);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    
-
     private void updateUser(HttpServletRequest request, HttpServletResponse response) {
         try {
             String action = request.getParameter("action");
-            
+
             User u = new User();
-            
-            if(action.equals("edit")) {
+
+            if (action.equals("edit")) {
                 int id = Integer.parseInt(request.getParameter("id"));
-                
+
                 u.setId(id);
-                
+
                 u = userService.findUserById(u);
-                
+
                 request.setAttribute("u", u);
                 request.getRequestDispatcher("/updateUser.jsp").forward(request, response);
             } else if (action.equals("update")) {
@@ -160,10 +169,10 @@ public class ControllerUser extends HttpServlet {
                 String addres = request.getParameter("addres");
                 String email = request.getParameter("email");
                 int phone = Integer.parseInt(request.getParameter("phone"));
-                
+
                 u.setId(id);
                 u = userService.findUserById(u);
-                
+
                 u.setUser(user);
                 u.setPassword(password);
                 u.setName(name);
@@ -173,9 +182,9 @@ public class ControllerUser extends HttpServlet {
                 u.setAddres(addres);
                 u.setEmail(email);
                 u.setPhone(phone);
-                
+
                 userService.updateUser(u);
-                
+
                 listUsers(request, response);
             }
         } catch (Exception e) {
@@ -183,19 +192,44 @@ public class ControllerUser extends HttpServlet {
         }
     }
 
-    
     private void deleteUser(HttpServletRequest request, HttpServletResponse response) {
         try {
             int id = Integer.parseInt(request.getParameter("id"));
-            
+
             User u = new User();
             u.setId(id);
-            
+
             userService.deleteUser(u);
-            
+
             listUsers(request, response);
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void listProductsByUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        int id = Integer.parseInt(request.getParameter("id"));
+
+        User u = new User();
+        u.setId(id);
+        u = userService.findUserById(u);
+
+        ArrayList<Product> list = new ArrayList<>(u.getProducts());
+
+        request.getSession().setAttribute("productList", list);
+
+        RequestDispatcher rd = request.getRequestDispatcher("/listProducts.jsp");
+
+        rd.forward(request, response);
+
+    }
+
+    private void orderByName(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        List list = userService.orderByName();
+        ArrayList<Product> listName = new ArrayList<>(list);
+
+        request.getSession().setAttribute("users", listName);
+        RequestDispatcher rd = request.getRequestDispatcher("/listUsers.jsp");
+        rd.forward(request, response);
     }
 }

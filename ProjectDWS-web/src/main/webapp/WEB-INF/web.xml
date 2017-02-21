@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
     <servlet>
+        <servlet-name>ControllerProduct</servlet-name>
+        <servlet-class>Servlets.ControllerProduct</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>ControllerUser</servlet-name>
         <servlet-class>Servlets.ControllerUser</servlet-class>
     </servlet>
@@ -10,6 +14,17 @@
         <url-pattern>/AddUser</url-pattern>
         <url-pattern>/UpdateUser</url-pattern>
         <url-pattern>/DeleteUser</url-pattern>
+        <url-pattern>/ListProductsByUser</url-pattern>
+        <url-pattern>/OrderByName</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ControllerProduct</servlet-name>
+        <url-pattern>/ListProducts</url-pattern>
+        <url-pattern>/AddProduct</url-pattern>
+        <url-pattern>/DeleteProduct</url-pattern>
+        <url-pattern>/UpdateProduct</url-pattern>
+        <url-pattern>/FillUpdateForm</url-pattern>
+        <url-pattern>/OrderByPrice</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

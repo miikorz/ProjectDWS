@@ -24,4 +24,6 @@ public interface UserDaoLocal {
     User findUserById(User user);
 
     public User updateUser(User user);
+    
+    List<User> orderByName();
 }

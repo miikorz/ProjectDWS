@@ -24,7 +24,7 @@
         <table class="table table-bordered table-striped table-hover">
             <tr class="thead-inverse">
                 <th>Usuario</th>
-                <th>Nombre</th>
+                <th>Nombre <a href="OrderByName"><i class="glyphicon glyphicon-apple" aria-hidden="true"></i></a></th>
                 <th>Primer Apellido</th>
                 <th>Segundo Apellido</th>
                 <th>Edad</th>
@@ -57,7 +57,7 @@
                 <td><%=addres%></td>
                 <td><%=email%></td>
                 <td><%=phone%></td>
-                <td><a href="AddProductsToUser?id=<%=id%>">Añadir Producto</a></td>
+                <td><a href="ListProductsByUser?id=<%=id%>" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-apple"></span> Mostrar Productos</a></td>
                 <td><a href="DeleteUser?id=<%=id%>" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Eliminar</a></td>
             </tr>
             <% }%>

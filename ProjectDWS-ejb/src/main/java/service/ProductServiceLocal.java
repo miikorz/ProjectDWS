@@ -7,6 +7,7 @@ package service;
 
 import entity.Product;
 import java.util.ArrayList;
+import java.util.List;
 import javax.ejb.Local;
 
 /**
@@ -16,13 +17,15 @@ import javax.ejb.Local;
 @Local
 public interface ProductServiceLocal {
     
-    ArrayList listProducts();
+    public List<Product> listProducts();
     
-    void addProduct(Product product);
+    public void addProduct(Product product);
 
     public Product findProductById(Product productToUpdate);
 
-    public void updateProduct(Product productToUpdate);
+    public Product updateProduct(Product productToUpdate);
 
     public void deleteProduct(Product productToDelete);
+    
+    public List<Product> orderByPrice();
 }

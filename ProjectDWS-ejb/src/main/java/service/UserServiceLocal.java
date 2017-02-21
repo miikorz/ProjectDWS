@@ -26,4 +26,6 @@ public interface UserServiceLocal {
     void deleteUser(User user);
 
     User findUserById(User user);
+    
+    List orderByName();
 }

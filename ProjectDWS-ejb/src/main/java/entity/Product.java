@@ -6,21 +6,59 @@
 package entity;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 
+@Entity
+@Table(name="product")
+@NamedQueries({
+@NamedQuery(name="product.findAll", query = "SELECT p FROM Product p ORDER BY p.productID"),
+@NamedQuery(name="product.orderByPrice", query = "SELECT p FROM Product p ORDER BY p.price")})
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 
 public class Product implements Serializable {
-    private int productID, stock;
-    private String name, description;
+    
+    private static final long serialVersionUID = 1L;
+    
+    @Id
+    @Column(name="id_product")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int productID;
+    
+    @Column(nullable=false)
+    private int stock;
+    
+    @Column(nullable=false, length=45)
+    private String name; 
+    
+    @Column(nullable=false, length=45)
+    private String description;
+    
+    @Column(nullable=false)
     private double price;
-    private ArrayList<String> extras;
+    
+    @ManyToOne
+    @JoinColumn(name = "user")
+    private User user; 
 
-    public Product(int productID, int stock, String name, String description, double price) {
-        this.productID = productID;
+    public Product(int stock, String name, String description, double price, User user) {
         this.stock = stock;
         this.name = name;
         this.description = description;
         this.price = price;
+        this.user = user;
     }
 
     public Product() {
@@ -67,13 +105,15 @@ public class Product implements Serializable {
         this.price = price;
     }
 
-    public ArrayList<String> getExtras() {
-        return extras;
+    public User getUser() {
+        return user;
     }
 
-    public void setExtras(ArrayList<String> extras) {
-        this.extras = extras;
+    public void setUser(User user) {
+        this.user = user;
     }
+
+    
     
     
 }

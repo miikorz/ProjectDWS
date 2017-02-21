@@ -5,6 +5,7 @@
  */
 package repository;
 
+import entity.Product;
 import entity.User;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -47,5 +48,11 @@ public class UserDao implements UserDaoLocal {
     @Override
     public User updateUser(User user) {
         return em.merge(user);
+    }
+
+    @Override
+    public List<User> orderByName() {
+        List<User> lista = em.createNamedQuery("user.orderByName").getResultList();
+        return lista;
     }
 }

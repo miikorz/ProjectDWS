@@ -25,8 +25,8 @@ public class UserService implements UserServiceLocal {
     private UserDaoLocal userDao;
 
     @Resource
-    private SessionContext contexto; 
-    
+    private SessionContext contexto;
+
     @Override
     public List<User> listUsers() {
         try {
@@ -73,6 +73,17 @@ public class UserService implements UserServiceLocal {
     public User updateUser(User user) {
         try {
             return userDao.updateUser(user);
+        } catch (Exception e) {
+            contexto.setRollbackOnly();
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public List<User> orderByName() {
+        try {
+            return userDao.orderByName();
         } catch (Exception e) {
             contexto.setRollbackOnly();
             e.printStackTrace();
