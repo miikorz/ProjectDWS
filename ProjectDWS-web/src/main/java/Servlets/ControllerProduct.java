@@ -6,8 +6,8 @@
 package Servlets;
 
 import entity.Product;
+import entity.User;
 import java.io.IOException;
-import java.io.PrintWriter;
 import static java.lang.Double.parseDouble;
 import static java.lang.Integer.parseInt;
 import java.util.ArrayList;
@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import service.ProductServiceLocal;
+import service.UserServiceLocal;
 
 /**
  *
@@ -35,6 +36,9 @@ import service.ProductServiceLocal;
             "/OrderByPrice"})
 
 public class ControllerProduct extends HttpServlet {
+
+    @EJB
+    private UserServiceLocal userService;
 
     @EJB
     private ProductServiceLocal productService;
@@ -121,27 +125,41 @@ public class ControllerProduct extends HttpServlet {
     private void listProducts(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         productList = productService.listProducts();
         productListArray = new ArrayList<>(productList);
+        
+        List listU = userService.listUsers();
+        ArrayList<User> arrayListU = new ArrayList<>(listU);
+        
         request.getSession().setAttribute("productList", productListArray);
+        request.getSession().setAttribute("users", arrayListU);
         rd = request.getRequestDispatcher("/listProducts.jsp");
         rd.forward(request, response);
     }
 
     private void addProduct(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        int id = parseInt(request.getParameter("id"));
+        //int id = parseInt(request.getParameter("id"));
         String name = request.getParameter("name");
         String desc = request.getParameter("desc");
         int stock = parseInt(request.getParameter("stock"));
         double price = parseDouble(request.getParameter("price"));
-
+        int idUser = Integer.parseInt(request.getParameter("user"));
+        
         Product product = new Product();
-        product.setProductID(id);
+        //product.setProductID(id);
         product.setName(name);
         product.setDescription(desc);
         product.setStock(stock);
         product.setPrice(price);
 
+        User u = new User();
+        u.setId(idUser);
+        u = userService.findUserById(u);
+        
+        product.setUser(u);
+        u.getProducts().add(product);
+        
         productService.addProduct(product);
+        userService.updateUser(u);
 
         productList = productService.listProducts();
         productListArray = new ArrayList<>(productList);
@@ -155,8 +173,14 @@ public class ControllerProduct extends HttpServlet {
         productID = parseInt(request.getParameter("id"));
         Product productToDelete = new Product();
         productToDelete.setProductID(productID);
+        productToDelete = productService.findProductById(productToDelete);
+        
+        User u = productToDelete.getUser();
+        productToDelete.getUser().getProducts().remove(productToDelete);
 
         productService.deleteProduct(productToDelete);
+        userService.updateUser(u);
+        
         productList = productService.listProducts();
         productListArray = new ArrayList<>(productList);
 
@@ -171,14 +195,29 @@ public class ControllerProduct extends HttpServlet {
         String productDesc = request.getParameter("description");
         int productStock = parseInt(request.getParameter("stock"));
         double productPrice = parseDouble(request.getParameter("price"));
+        int idUser = Integer.parseInt(request.getParameter("user"));
 
         productToUpdate.setProductID(productID);
+        
+        productToUpdate = productService.findProductById(productToUpdate);
+        
         productToUpdate.setName(productName);
         productToUpdate.setDescription(productDesc);
         productToUpdate.setStock(productStock);
         productToUpdate.setPrice(productPrice);
 
+        User u = new User();
+        u.setId(idUser);
+        u = userService.findUserById(u);
+        User oldUser = productToUpdate.getUser();
+        productToUpdate.getUser().getProducts().remove(productToUpdate);
+        productToUpdate.setUser(u);
+        u.getProducts().add(productToUpdate);
+        
         productService.updateProduct(productToUpdate);
+        userService.updateUser(u);
+        userService.updateUser(oldUser);
+        
         productList = productService.listProducts();
         productListArray = new ArrayList<>(productList);
 
@@ -192,6 +231,8 @@ public class ControllerProduct extends HttpServlet {
         productToUpdate.setProductID(productID);
         productToUpdate = productService.findProductById(productToUpdate);
 
+        
+        
         request.setAttribute("productToUpdate", productToUpdate);
         request.getRequestDispatcher("/updateProduct.jsp").forward(request, response);
     }
